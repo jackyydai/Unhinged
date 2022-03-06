@@ -14,6 +14,41 @@ const std::string TRANSLATOR_FILE = "translator.txt";
 
 bool findMatches(const MemberDatabase& mdb, const AttributeTranslator& at);
 
+
+void listCompatiblePairs(const AttributeTranslator& translator)
+{
+     AttValPair att("job", "salesperson");
+     std::vector<AttValPair> result =
+     translator.FindCompatibleAttValPairs(att);
+    if (!result.empty())
+    {
+         std::cout << "Compatible attributes and values:" << std::endl;
+         for (const auto& p: result)
+         std::cout << p.attribute << " -> " << p.value << std::endl;
+     }
+}
+
+void printEmails(const MemberDatabase& mdb)
+{
+     AttValPair att("job", "salesperson");
+     std::vector<std::string> result = mdb.FindMatchingMembers(att);
+    if (!result.empty())
+    {
+         std::cout << "Compatible emails:" << std::endl;
+         for (const auto& p: result)
+         std::cout << p << std::endl;
+     }
+}
+
+void findMemberByEmail(const MemberDatabase& md, std::string member_email)
+{
+    const PersonProfile* ptr = md.GetMemberByEmail(member_email);
+    if (ptr != nullptr)
+    std::cout << "Found info for member: " << ptr->GetName() << std::endl;
+    else
+    std::cout << "No member has address " << member_email << std::endl;
+}
+
 int main() {
 //    MemberDatabase mdb;
 //    if (!mdb.LoadDatabase(MEMBERS_FILE))
@@ -33,11 +68,20 @@ int main() {
 //
 //    std::cout << "Happy dating!" << std::endl;
     
-    AttributeTranslator tra = AttributeTranslator();
-    tra.Load(TRANSLATOR_FILE);
+//    AttributeTranslator tra = AttributeTranslator();
+//    tra.Load(TRANSLATOR_FILE);
+//    std::cout << "----------" << std::endl;
+//    listCompatiblePairs(tra);
+//
+    
+    MemberDatabase mdb;
+    mdb.LoadDatabase(MEMBERS_FILE);
+    //printEmails(mdb);
+    findMemberByEmail(mdb, "TitusQuin0@me.com");
     
     
 }
+
 
 bool findMatches(const MemberDatabase& mdb, const AttributeTranslator& at)
 {

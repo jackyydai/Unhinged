@@ -11,8 +11,8 @@
 #include "provided.h"
 #include <string>
 #include <vector>
-//#include <unordered_set>// get rid of this pls
-#include <unordered_map>
+#include <set>
+//#include <unordered_map>
 
 class AttValPair;
 class PersonProfile
@@ -65,8 +65,9 @@ private:
     std::string m_name;
     std::string m_email;
     int m_attribute_num;
-    std::unordered_map<std::string, std::string> attMap;
-    //std::unordered_set<AttValPair> attSet;
+    //std::unordered_map<std::string, std::string> attMap;
+    std::vector<AttValPair> attVec;
+    std::set<AttValPair> attSet;
     
 };
 

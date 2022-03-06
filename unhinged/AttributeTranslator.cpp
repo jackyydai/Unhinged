@@ -80,16 +80,16 @@ bool AttributeTranslator::Load(std::string filename)
 
                 (*p).second.push_back(AttValPair(cAtt, cVal));
             }
-            cout <<(*p).first << endl;
-            for(int i = 0; i < (*p).second.size(); i++)
-            {
-
-                cout << (*p).second[i].attribute << "," << (*p).second[i].value << endl;
-
-            }
-            cout << endl;
-            cout << endl;
-            cout << endl;
+//            cout << "source :  " <<(*p).first << endl;
+//            for(int i = 0; i < (*p).second.size(); i++)
+//            {
+//
+//                cout << (*p).second[i].attribute << "," << (*p).second[i].value << endl;
+//
+//            }
+//            cout << endl;
+//            cout << endl;
+//            cout << endl;
         }
 
 
@@ -98,8 +98,18 @@ bool AttributeTranslator::Load(std::string filename)
     return true;
 }
 
-//std::vector<AttValPair> AttributeTranslator::FindCompatibleAttValPairs(const AttValPair& source) const
-//{
-//    return ;
-//}
+std::vector<AttValPair> AttributeTranslator::FindCompatibleAttValPairs(const AttValPair& source) const
+{
+    string search = source.attribute + "," + source.value;
+    map<string, vector<AttValPair>>::const_iterator p = attMap.find(search);
+    if(p == attMap.end())
+    {
+        vector<AttValPair> nothing;
+        return nothing;
+    }
+    else
+    {
+        return (*p).second;
+    }
+}
 

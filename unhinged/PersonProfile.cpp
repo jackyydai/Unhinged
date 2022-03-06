@@ -15,8 +15,14 @@ void PersonProfile::AddAttValPair(const AttValPair& attval)
 {
 //    if(attSet.find(attval) == attSet.end())
 //    {
-        attMap.insert(make_pair(attval.attribute, attval.value));
-        m_attribute_num++; 
+        //attMap.insert(make_pair(attval.attribute, attval.value));
+    if(attSet.find(attval) == attSet.end())
+    {
+        attVec.push_back(attval);
+        attSet.insert(attval);
+        m_attribute_num++;
+    }
+        
 //    }
 
 }
@@ -24,20 +30,13 @@ void PersonProfile::AddAttValPair(const AttValPair& attval)
 
 bool PersonProfile::GetAttVal(int attribute_num, AttValPair& attval) const
 {
-    if(attribute_num < 0 || attribute_num > attMap.size() - 1)
+    if(attribute_num < 0 || attribute_num > attVec.size() - 1)
     {
         return false;
     }
-    auto p = attMap.begin();
-    for(int i = 0; i < attribute_num; i++)
-    {
-        p++;
-    }
-    //attval = *p;
-    attval.attribute = (*p).first;
-    attval.value = (*p).second;
-
-    //std::unordered_set<AttValPair>::iterator  p = std::attSet.begin()+attribute_num;
+    
+    attval.attribute = attVec[attribute_num].attribute;
+    attval.value = attVec[attribute_num].value;
 
 
     return true;
