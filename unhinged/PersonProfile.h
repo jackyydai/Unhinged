@@ -11,8 +11,8 @@
 #include "provided.h"
 #include <string>
 #include <vector>
-#include <set>
-//#include <unordered_map>
+#include <set>// get rid of this pls
+#include <map>
 
 class AttValPair;
 class PersonProfile
@@ -54,7 +54,7 @@ public:
     
     int GetNumAttValPairs() const
     {
-        return m_attribute_num;
+        return int(attVec.size());
     }
 //    This method returns the total number of distinct attribute-value pairs associated with this
 //    member.
@@ -64,10 +64,10 @@ public:
 private:
     std::string m_name;
     std::string m_email;
-    int m_attribute_num;
-    //std::unordered_map<std::string, std::string> attMap;
+    //int m_attribute_num;
+    std::map<std::string, std::string> attMap;
     std::vector<AttValPair> attVec;
-    std::set<AttValPair> attSet;
+    //std::set<AttValPair> attSet;
     
 };
 

@@ -6,25 +6,31 @@
 //
 
 #include "PersonProfile.h"
+using namespace std;
 PersonProfile::PersonProfile(std::string name, std::string email)
-: m_name(name), m_email(email), m_attribute_num(0)
+: m_name(name), m_email(email)//, m_attribute_num(0)
 {
 }
 
 void PersonProfile::AddAttValPair(const AttValPair& attval)
 {
-//    if(attSet.find(attval) == attSet.end())
-//    {
-        //attMap.insert(make_pair(attval.attribute, attval.value));
-    if(attSet.find(attval) == attSet.end())
+    map<std::string,std::string>::iterator p = attMap.find(attval.attribute);
+    if(p == attMap.end())
     {
         attVec.push_back(attval);
-        attSet.insert(attval);
-        m_attribute_num++;
+        attMap.insert(make_pair(attval.attribute,attval.value));
     }
-        
-//    }
+    else
+    {
+        if((*p).second != attval.value)
+        {
+            attVec.push_back(attval);
+            attMap.insert(make_pair(attval.attribute,attval.value));
+        }
+    }
 
+  
+    
 }
 
 
