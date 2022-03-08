@@ -28,9 +28,6 @@ void PersonProfile::AddAttValPair(const AttValPair& attval)
             attMap.insert(make_pair(attval.attribute,attval.value));
         }
     }
-
-  
-    
 }
 
 

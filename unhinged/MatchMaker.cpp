@@ -6,6 +6,39 @@
 //
 
 #include "MatchMaker.h"
+#include <set>
+#include <vector>
+#include <iostream>
+using namespace std;
+
+
+bool MatchMaker::greater(const EmailCount& lhs, const EmailCount& rhs)
+{
+    if(lhs.count > rhs.count)
+    {
+        return true;
+    }
+    if(lhs.count < rhs.count)
+    {
+        return false;
+    }
+    return lhs.email < rhs.email;
+}
+
+AttValPair MatchMaker::createAttPair(const string& line) const
+{
+    int cIndex = int(line.find(","));
+    string att = line.substr(0, cIndex);
+    string val = line.substr(cIndex + 1);
+    AttValPair newPair(att, val);
+    return newPair;
+}
+
+string MatchMaker::createString(AttValPair line) const
+{
+    return line.attribute + "," + line.value;
+}
+
 
 
 MatchMaker::MatchMaker(const MemberDatabase& mdb, const AttributeTranslator& at)
@@ -13,8 +46,86 @@ MatchMaker::MatchMaker(const MemberDatabase& mdb, const AttributeTranslator& at)
 {}
 
 
-//std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email, int threshold) const
-//{
-//    
-//}
+std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email, int threshold) const
+{
+    const PersonProfile* subject = m_mdb->GetMemberByEmail(email); // get person profile using email
 
+    vector<EmailCount> ecVec;
+
+    //std::vector<string> subjectVecAttValPairs;// vector that holds all of subject's attvalpairs
+    unordered_set<string> compadSet;
+
+    //cout << "----------------------------compadable-------------------------------" << endl;
+    for(int i = 0; i< subject->GetNumAttValPairs(); i++)
+    {
+        AttValPair temp;
+        subject->GetAttVal(i, temp);
+        vector<AttValPair> compadVec = m_at->FindCompatibleAttValPairs(temp);
+        for(int j = 0; j < compadVec.size(); j++)
+        {
+            compadSet.insert(createString(compadVec[j]));
+            //cout << createString(compadVec[j]) << endl;
+        }
+    }
+    //cout << "---------------------------------------------------------------------------------" << endl;
+
+    unordered_set<string> compadEmailSet;
+
+    for(unordered_set<string>::iterator p = compadSet.begin(); p != compadSet.end(); p++)
+    {
+        AttValPair cAttVal = createAttPair(*p);
+        vector<string> compadEmails = m_mdb->FindMatchingMembers(cAttVal);
+        for(int m = 0; m < compadEmails.size(); m++)
+        {
+            compadEmailSet.insert(compadEmails[m]);
+            
+        }
+    }
+
+    for(unordered_set<string>::iterator q = compadEmailSet.begin(); q != compadEmailSet.end(); q++)
+    {
+        const PersonProfile* cSubject = m_mdb->GetMemberByEmail(*q);
+        int count = 0;
+        //cout << "name: " << cSubject->GetName() << endl;
+        for(int l = 0; l< cSubject->GetNumAttValPairs(); l++)
+        {
+            AttValPair potentialAttPair;
+            cSubject->GetAttVal(l, potentialAttPair);
+            
+            if(compadSet.find(createString(potentialAttPair)) != compadSet.end())
+            {
+                //cout << potentialAttPair.attribute + "," +potentialAttPair.value << endl;
+                count ++;
+            }
+        }
+        if(count >= threshold)
+        {
+            EmailCount toBeAdded(*q,count);
+            ecVec.push_back(toBeAdded);
+        }
+        
+//        for(int i = 0; i < ecVec.size(); i++)
+//        {
+//            AttValPair temp;
+//            cSubject->GetAttVal(i, temp);
+//            std::cout << temp.attribute;
+//            std::cout << temp.value;
+//
+//
+//
+//        }
+            
+    }
+
+    sort(ecVec.begin(),ecVec.end(),greater);
+
+
+    //unordered_set<string> subjectSetAttValPairs(subjectVecAttValPairs.begin(),subjectVecAttValPairs.end());
+    //for(int i = 0; i < )
+
+
+
+
+
+    return ecVec;
+}
