@@ -40,6 +40,7 @@
 		C39646CD27D3431500487D7F /* MemberDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemberDatabase.h; sourceTree = "<group>"; };
 		C39646CF27D349F500487D7F /* MatchMaker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MatchMaker.cpp; sourceTree = "<group>"; };
 		C39646D027D349F500487D7F /* MatchMaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchMaker.h; sourceTree = "<group>"; };
+		C39646D327D70A2700487D7F /* RadixTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RadixTree.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +85,7 @@
 				C39646CD27D3431500487D7F /* MemberDatabase.h */,
 				C39646CF27D349F500487D7F /* MatchMaker.cpp */,
 				C39646D027D349F500487D7F /* MatchMaker.h */,
+				C39646D327D70A2700487D7F /* RadixTree.h */,
 			);
 			path = unhinged;
 			sourceTree = "<group>";
