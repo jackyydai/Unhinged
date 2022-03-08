@@ -13,6 +13,7 @@
 #include <vector>
 #include <set>// get rid of this pls
 #include <map>
+#include "RadixTree.h"
 
 class AttValPair;
 class PersonProfile
