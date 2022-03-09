@@ -129,7 +129,7 @@ int main() {
 //    std::cout << "Happy dating!" << std::endl;
     //code ^^^^^^
 
-    RadixTree<int> rT;
+  //  RadixTree<int> rT;
 //    rT.insert("shop", 5);
 //    rT.insert("good", 2);
 //    rT.insert("mad", 9);
@@ -137,24 +137,26 @@ int main() {
 //    rT.insert("shell", 111);
 //    rT.insert("sheep", 123);
 //    rT.insert("she", 123333);
-    rT.insert2("car", 2);
-    rT.insert2("card", 1);
-    rT.insert2("camp", 3);
-    rT.insert2("cramp", 99);
-    rT.insert2("carry", 960);
+   // rT.insert("car", 2);
+    //rT.insert("car", 1);
+//    rT.insert("camp", 3);
+//    rT.insert("cramp", 99);
+//    rT.insert("carry", 960);
+    
+    //rT.insert("card", 3);
+    //rT.insert("camp", 3);
     
 //    rT.insert("car",90);
 
 //    rT.insert("she", 1);
 //    rT.insert("sheep", 2);
 
-    std::cout << *(rT.search2("car")) << std::endl;
-    std::cout << *(rT.search2("card")) << std::endl;
-    std::cout << *(rT.search2("camp")) << std::endl;
-    std::cout << *(rT.search2("cramp")) << std::endl;
-    std::cout << *(rT.search2("carry")) << std::endl;
-    std::cout << *(rT.search2("carr")) << std::endl;
-    //std::cout << *(rT.search("car")) << std::endl;
+   // std::cout << *(rT.search("car")) << std::endl;
+//    std::cout << *(rT.search("card")) << std::endl;
+//    std::cout << *(rT.search("camp")) << std::endl;
+//    std::cout << *(rT.search("cramp")) << std::endl;
+//    std::cout << *(rT.search("carry")) << std::endl;
+//    std::cout << *(rT.search("shop")) << std::endl;
 
 //    AttributeTranslator tra = AttributeTranslator();
 //    tra.Load(TRANSLATOR_FILE);
@@ -167,7 +169,32 @@ int main() {
 //    //printEmails(mdb);
 //    findMemberByEmail(mdb, "TitusQuin0@me.com");
 //
-
+    RadixTree<AttValPair> radix;
+    AttValPair sus = AttValPair("fish", "hat");
+        AttValPair sus1 = AttValPair("frog", "box");
+        AttValPair sus2 = AttValPair("toad", "crash");
+        AttValPair sus3 = AttValPair("tadpole", "poke");
+        AttValPair sus4 = AttValPair("Carey", "Nach");
+        AttValPair sus5 = AttValPair("Radix", "Tree");
+    radix.insert("car", sus3);
+        //radix.insert("camp", sus1);
+        radix.insert("cramp", sus2);
+        radix.insert("carry", sus4);
+        //radix.insert("car", sus5);
+        radix.insert("KamPrin1883@icloud.com", sus5);
+        radix.insert("KBry4643@aim.com", sus);
+   
+        //AttValPair* temp = ;
+        //AttValPair* temp1 = ;
+        //AttValPair* temp2 = radix.search("cramp");
+        //AttValPair* temp3 = radix.search("car");
+        cout << radix.search("KBry4643@aim.com")->attribute << endl;
+        
+        cout << radix.search("KamPrin1883@icloud.com")->attribute << endl;
+        //cout << temp2->attribute << endl;
+        //cout << temp3->attribute << endl;
+    
+    
 }
 
 
