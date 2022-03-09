@@ -11,8 +11,8 @@
 #include "provided.h"
 #include <string>
 #include <vector>
-#include <set>// get rid of this pls
-#include <map>
+#include <unordered_set>
+#include <map>// get rid of this pls
 #include "RadixTree.h"
 
 class AttValPair;
@@ -67,6 +67,8 @@ private:
     std::string m_email;
     //int m_attribute_num;
     std::map<std::string, std::string> attMap;
+    //RadixTree<std::unordered_set<std::string>> attRTset;
+    
     std::vector<AttValPair> attVec;
     //std::set<AttValPair> attSet;
     

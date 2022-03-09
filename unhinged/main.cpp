@@ -63,73 +63,73 @@ void tester(AttValPair* pair)
     }
 }
 
-int main() {
-RadixTree<AttValPair> radix;
-
-AttValPair sus = AttValPair("card", "hat");
-AttValPair sus2 = AttValPair("card", "ff");
-AttValPair sus3 = AttValPair("ligma", "sugma");
-AttValPair sus4 = AttValPair("zzzz", "zzz4");
-
-radix.insert("fish", sus);
-radix.insert("fire", sus2);
-radix.insert("fi", sus3);
-radix.insert("firestorm", sus4);
-
-
-
-cout << "================" << endl;
-//General insertion cases
-AttValPair* temp;
-
-
-temp= radix.search("fire");
-tester(temp);
-temp = radix.search("fi");
-tester(temp);
-temp = radix.search("fish");
-tester(temp);
-
-//Overwrite Test
-radix.insert("fire", sus3);
-
-temp = radix.search("fire");
-tester(temp);
-    
-
-//"fire" already in string, what happens if we add "firestorm?"
-temp = radix.search("firestorm");
-tester(temp);
-
-temp = radix.search("dragon");
-tester(temp);
-
-cout << "cheese" << endl;
-return 0;
-
-}
-
 //int main() {
-////    MemberDatabase mdb;
-////    if (!mdb.LoadDatabase(MEMBERS_FILE))
-////    {
-////        std::cout << "Error loading " << MEMBERS_FILE << std::endl;
-////        return 1;
-////    }
-////    AttributeTranslator at;
-////    if (!at.Load(TRANSLATOR_FILE))
-////    {
-////        std::cout << "Error loading " << TRANSLATOR_FILE << std::endl;
-////        return 1;
-////    }
-////
-////    while (findMatches(mdb, at))
-////        ;
-////
-////    std::cout << "Happy dating!" << std::endl;
-//    //code ^^^^^^
+//RadixTree<AttValPair> radix;
 //
-//    RadixTree<int> rT;
+//AttValPair sus = AttValPair("card", "hat");
+//AttValPair sus2 = AttValPair("card", "ff");
+//AttValPair sus3 = AttValPair("ligma", "sugma");
+//AttValPair sus4 = AttValPair("zzzz", "zzz4");
+//
+//radix.insert("fish", sus);
+//radix.insert("fire", sus2);
+//radix.insert("fi", sus3);
+//radix.insert("firestorm", sus4);
+//
+//
+//
+//cout << "================" << endl;
+////General insertion cases
+//AttValPair* temp;
+//
+//
+//temp= radix.search("fire");
+//tester(temp);
+//temp = radix.search("fi");
+//tester(temp);
+//temp = radix.search("fish");
+//tester(temp);
+//
+////Overwrite Test
+//radix.insert("fire", sus3);
+//
+//temp = radix.search("fire");
+//tester(temp);
+//
+//
+////"fire" already in string, what happens if we add "firestorm?"
+//temp = radix.search("firestorm");
+//tester(temp);
+//
+//temp = radix.search("dragon");
+//tester(temp);
+//
+//cout << "cheese" << endl;
+//return 0;
+//
+//}
+
+int main() {
+//    MemberDatabase mdb;
+//    if (!mdb.LoadDatabase(MEMBERS_FILE))
+//    {
+//        std::cout << "Error loading " << MEMBERS_FILE << std::endl;
+//        return 1;
+//    }
+//    AttributeTranslator at;
+//    if (!at.Load(TRANSLATOR_FILE))
+//    {
+//        std::cout << "Error loading " << TRANSLATOR_FILE << std::endl;
+//        return 1;
+//    }
+//
+//    while (findMatches(mdb, at))
+//        ;
+//
+//    std::cout << "Happy dating!" << std::endl;
+    //code ^^^^^^
+
+    RadixTree<int> rT;
 //    rT.insert("shop", 5);
 //    rT.insert("good", 2);
 //    rT.insert("mad", 9);
@@ -137,44 +137,38 @@ return 0;
 //    rT.insert("shell", 111);
 //    rT.insert("sheep", 123);
 //    rT.insert("she", 123333);
-//    rT.insert("card", 2);
-//    rT.insert("camp", 1);
-//
+    rT.insert2("car", 2);
+    rT.insert2("card", 1);
+    rT.insert2("camp", 3);
+    rT.insert2("cramp", 99);
+    rT.insert2("carry", 960);
+    
+//    rT.insert("car",90);
+
 //    rT.insert("she", 1);
 //    rT.insert("sheep", 2);
+
+    std::cout << *(rT.search2("car")) << std::endl;
+    std::cout << *(rT.search2("card")) << std::endl;
+    std::cout << *(rT.search2("camp")) << std::endl;
+    std::cout << *(rT.search2("cramp")) << std::endl;
+    std::cout << *(rT.search2("carry")) << std::endl;
+    std::cout << *(rT.search2("carr")) << std::endl;
+    //std::cout << *(rT.search("car")) << std::endl;
+
+//    AttributeTranslator tra = AttributeTranslator();
+//    tra.Load(TRANSLATOR_FILE);
+//    std::cout << "----------" << std::endl;
+//    listCompatiblePairs(tra);
 //
-//    RadixTree<AttValPair> attRT;
-//    AttValPair a;
-//    a.attribute = "sport";
-//    a.value = "tennis";
+
+//    MemberDatabase mdb;
+//    mdb.LoadDatabase(MEMBERS_FILE);
+//    //printEmails(mdb);
+//    findMemberByEmail(mdb, "TitusQuin0@me.com");
 //
-//    a.attribute = "sport";
-//    a.value = "tennis";
-//
-//    a.attribute = "sport";
-//    a.value = "tennis";
-//
-//    a.attribute = "sport";
-//    a.value = "tennis";
-//
-//
-//
-//
-//    std::cout << *(rT.search("bell")) << std::endl;
-//
-////    AttributeTranslator tra = AttributeTranslator();
-////    tra.Load(TRANSLATOR_FILE);
-////    std::cout << "----------" << std::endl;
-////    listCompatiblePairs(tra);
-////
-//
-////    MemberDatabase mdb;
-////    mdb.LoadDatabase(MEMBERS_FILE);
-////    //printEmails(mdb);
-////    findMemberByEmail(mdb, "TitusQuin0@me.com");
-////
-//
-//}
+
+}
 
 
 bool findMatches(const MemberDatabase& mdb, const AttributeTranslator& at)

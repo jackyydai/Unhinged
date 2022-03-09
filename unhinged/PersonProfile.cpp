@@ -15,10 +15,16 @@ PersonProfile::PersonProfile(std::string name, std::string email)
 void PersonProfile::AddAttValPair(const AttValPair& attval)
 {
     map<std::string,std::string>::iterator p = attMap.find(attval.attribute);
+    //unordered_set<std::string>* q = attRTset.search(attval.attribute);
+    
+    //if(q == nullptr)
     if(p == attMap.end())
     {
         attVec.push_back(attval);
         attMap.insert(make_pair(attval.attribute,attval.value));
+        //unordered_set<std::string> toBeAdded;
+        //toBeAdded.insert(attval.value);
+        //attRTset.insert(attval.attribute,toBeAdded);
     }
     else
     {
