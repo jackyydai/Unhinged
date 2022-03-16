@@ -26,9 +26,9 @@ public:
 private:
     const MemberDatabase* m_mdb;
     const AttributeTranslator* m_at;
-    static bool greater(const EmailCount& lhs, const EmailCount& rhs);
-    AttValPair createAttPair(const std::string& line) const;
-    std::string createString(AttValPair line) const;
+    static bool greater(const EmailCount& lhs, const EmailCount& rhs); // comparison function to order the vector using sort
+    AttValPair createAttPair(const std::string& line) const; // function to turn string to AttValPair
+    std::string createString(AttValPair line) const; // function to turn AttvalPair into string
 };
 
 #endif /* MatchMaker_hpp */

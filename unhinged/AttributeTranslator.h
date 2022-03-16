@@ -13,6 +13,7 @@
 #include "provided.h"
 #include <vector>
 #include <map>
+#include "RadixTree.h"
 
 
 class AttributeTranslator
@@ -46,8 +47,8 @@ public:
 //    favorite_food,del taco,favorite_food,mexican
 //    The first two terms represent the source attribute and sourc
 private:
-    std::map<std::string, std::vector<AttValPair>> attMap;
-    
+    RadixTree<std::vector<AttValPair>> attTransRT;//maps source attribute-value information to compatible attribute-values(vector)
+
 };
 
 

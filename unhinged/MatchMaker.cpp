@@ -9,6 +9,7 @@
 #include <set>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 
@@ -50,81 +51,60 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email, int
 {
     const PersonProfile* subject = m_mdb->GetMemberByEmail(email); // get person profile using email
 
-    vector<EmailCount> ecVec;
+    vector<EmailCount> ecVec; //create empty vector of emailcounts
 
-    //std::vector<string> subjectVecAttValPairs;// vector that holds all of subject's attvalpairs
     unordered_set<string> compadSet;
 
     //cout << "----------------------------compadable-------------------------------" << endl;
-    for(int i = 0; i< subject->GetNumAttValPairs(); i++)
+    for(int i = 0; i< subject->GetNumAttValPairs(); i++) //for loops through the attribute values of personprofile of the email that is mapped together
     {
         AttValPair temp;
         subject->GetAttVal(i, temp);
-        vector<AttValPair> compadVec = m_at->FindCompatibleAttValPairs(temp);
+        vector<AttValPair> compadVec = m_at->FindCompatibleAttValPairs(temp); //gets a vector of compatable attvalpairs of each attval pair of PersonProfile
         for(int j = 0; j < compadVec.size(); j++)
         {
-            compadSet.insert(createString(compadVec[j]));
-            //cout << createString(compadVec[j]) << endl;
+            compadSet.insert(createString(compadVec[j]));// inserts each attvalpair into a unordered set as a string to remove duplicates
         }
     }
     //cout << "---------------------------------------------------------------------------------" << endl;
 
-    unordered_set<string> compadEmailSet;
+    unordered_set<string> compadEmailSet;//
 
-    for(unordered_set<string>::iterator p = compadSet.begin(); p != compadSet.end(); p++)
+    for(unordered_set<string>::iterator p = compadSet.begin(); p != compadSet.end(); p++) //loops through entire compatable attvalpair set
     {
         AttValPair cAttVal = createAttPair(*p);
-        vector<string> compadEmails = m_mdb->FindMatchingMembers(cAttVal);
+        vector<string> compadEmails = m_mdb->FindMatchingMembers(cAttVal); //gets a vector of emails from compatable attvalpairs
         for(int m = 0; m < compadEmails.size(); m++)
         {
-            compadEmailSet.insert(compadEmails[m]);
+            compadEmailSet.insert(compadEmails[m]);// inserts each email into a unodered set to remove duplicate emails
             
         }
     }
 
-    for(unordered_set<string>::iterator q = compadEmailSet.begin(); q != compadEmailSet.end(); q++)
+    for(unordered_set<string>::iterator q = compadEmailSet.begin(); q != compadEmailSet.end(); q++) // loops through compatableEmail set
     {
-        const PersonProfile* cSubject = m_mdb->GetMemberByEmail(*q);
+        const PersonProfile* cSubject = m_mdb->GetMemberByEmail(*q);// get each PersonProfile from the emails in the set
         int count = 0;
         //cout << "name: " << cSubject->GetName() << endl;
-        for(int l = 0; l< cSubject->GetNumAttValPairs(); l++)
+        for(int l = 0; l< cSubject->GetNumAttValPairs(); l++)//get each attvalpair of the personProfile
         {
             AttValPair potentialAttPair;
             cSubject->GetAttVal(l, potentialAttPair);
             
-            if(compadSet.find(createString(potentialAttPair)) != compadSet.end())
+            if(compadSet.find(createString(potentialAttPair)) != compadSet.end()) //counts the number of compatable attval pairs that equal the person's attval pairs
             {
-                //cout << potentialAttPair.attribute + "," +potentialAttPair.value << endl;
                 count ++;
             }
         }
-        if(count >= threshold)
+        if(count >= threshold) //if it meets the threshold create EmailCount and add it to the emailcount vector
         {
             EmailCount toBeAdded(*q,count);
             ecVec.push_back(toBeAdded);
         }
-        
-//        for(int i = 0; i < ecVec.size(); i++)
-//        {
-//            AttValPair temp;
-//            cSubject->GetAttVal(i, temp);
-//            std::cout << temp.attribute;
-//            std::cout << temp.value;
-//
-//
-//
-//        }
             
     }
 
-    sort(ecVec.begin(),ecVec.end(),greater);
-
-
-    //unordered_set<string> subjectSetAttValPairs(subjectVecAttValPairs.begin(),subjectVecAttValPairs.end());
-    //for(int i = 0; i < )
-
-
-
+    sort(ecVec.begin(),ecVec.end(),greater);//sort vector in descending order of the number of compatible attribute-value pairs, with ties broken by a secondary ordering in ascending alphabetical order by email address
 
 
     return ecVec;

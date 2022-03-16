@@ -11,6 +11,9 @@
 #include <algorithm>
 using namespace std;
 
+MemberDatabase::~MemberDatabase()
+{}
+
 AttValPair MemberDatabase::createAttPair(string line)
 {
     int cIndex = int(line.find(","));
@@ -30,55 +33,55 @@ bool MemberDatabase::LoadDatabase(std::string filename)
     {
         return false;
     }
-    while(getline(infile, line, '\n'))
+    while(getline(infile, line, '\n'))//this loop goes through every chunk of member's information at a time
     {
         string name;
         string email;
         string strOfAtt;
         
-        //getline(infile, line, '\n');
-        name = line;
+        name = line; // sets the first line to string varible name
         //cout << name << endl;
         
         getline(infile, line, '\n');
-        email = line;
+        email = line;//sets second line to the string varible email
         //cout << email <<  endl;
 
         getline(infile, line, '\n');
         strOfAtt = line;
         //cout << strOfAtt << endl ;
-        int numOfAtt = stoi(strOfAtt);
+        int numOfAtt = stoi(strOfAtt); //cast to a int using stoi
         //cout << numOfAtt << endl;
         
         
         
-        if(emailPerson.find(email) != emailPerson.end())
+//        if(emailPerson.find(email) != emailPerson.end())
+        if(emailPersonRT.search(email) != nullptr) // If two members in the data file have the same email address, this method returns false.
         {
-            //cout << "hi" ;
             return false;
         }
-        PersonProfile* person = new PersonProfile(name,email);
-        for(int i = 0; i < numOfAtt; i++)
+        
+        PersonProfile* person = new PersonProfile(name,email); //create new person
+        for(int i = 0; i < numOfAtt; i++) // loops through the number of attributeval in each each memeber discription
         {
             string sPair;
             getline(infile, line, '\n');
             sPair = line;
             AttValPair aPair = createAttPair(sPair);
-            person->AddAttValPair(aPair);
-            map<string, vector<string>>::iterator p = pairEmails.find(sPair);
-            //string compatibleKey = cAtt + "," + cVal;
-            if(p == pairEmails.end())
+            
+            person->AddAttValPair(aPair);// add each attvalpair the person just created
+            vector<string>* p = pairEmailsRT.search(sPair);//creates a vetor pointer to see if their exist vector of emails that map to a sourse pair
+            if(p == nullptr)
             {
-                vector<string> toBeAdded;
+                vector<string> toBeAdded; //create a vector of string to hold emails
                 toBeAdded.push_back(email);
-                pairEmails.insert(make_pair(sPair, toBeAdded));
+                pairEmailsRT.insert(sPair, toBeAdded); //add to the radix tree
             }
             else
             {
                 bool end = false;
-                for(int i = 0; i < (*p).second.size(); i++)
+                for(int i = 0; i < (*p).size(); i++) // if the vector of emails already exist check if this email is in the vector, is not add it in
                 {
-                    if(email == ((*p).second)[i])
+                    if(email == (*p)[i])
                     {
                         end = true;
                         break;
@@ -88,13 +91,14 @@ bool MemberDatabase::LoadDatabase(std::string filename)
                 {
 //                    if(find((*p).second.begin(),(*p).second.end(),email) == (*p).second.end())
 //                    {
-                        (*p).second.push_back(email);
+                        (*p).push_back(email);
                     //}
                 }
             }
         }
-        emailPerson.insert(make_pair(email, person));
-        getline(infile, line, '\n');
+        emailPersonRT.insert(email, person); // insert the email map to person in the Radix tree
+        //emailPerson.insert(make_pair(email, person));
+        getline(infile, line, '\n'); // skips the extra new line
     }
     infile.close();
     return true;
@@ -106,27 +110,29 @@ bool MemberDatabase::LoadDatabase(std::string filename)
 std::vector<std::string> MemberDatabase::FindMatchingMembers(const AttValPair& input) const
 {
     string search = input.attribute + "," + input.value;
-    map<string, vector<string>>::const_iterator p = pairEmails.find(search);
-    if(p == pairEmails.end())
+    
+    vector<string>* p = pairEmailsRT.search(search);// searches the attribute value pair email tree
+    
+    if(p == nullptr)//if null return empty string, return vector itself otherwise
     {
         vector<string> nothing;
         return nothing;
     }
     else
     {
-        return (*p).second;
+        return (*p);
     }
 }
 
 const PersonProfile* MemberDatabase::GetMemberByEmail(std::string email) const
 {
-    map<string, PersonProfile*>::const_iterator p = emailPerson.find(email);
-    if(p == emailPerson.end())
+    PersonProfile** p = emailPersonRT.search(email); //searches the email person radix tree
+    if(p == nullptr)//if does not exist return null pointer, return person otherwise
     {
         return nullptr;
     }
     else
     {
-        return (*p).second;
+        return (*p);
     }
 }

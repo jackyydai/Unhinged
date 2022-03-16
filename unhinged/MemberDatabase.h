@@ -19,7 +19,7 @@ class MemberDatabase
 public:
     MemberDatabase(){}
     
-    ~MemberDatabase(){}
+    ~MemberDatabase();
     
     bool LoadDatabase(std::string filename);
     
@@ -28,9 +28,11 @@ public:
     const PersonProfile* GetMemberByEmail(std::string email) const;
 private:
     
-    AttValPair createAttPair(std::string input);
-    std::map<std::string, std::vector<std::string>> pairEmails;
-    std::map<std::string, PersonProfile*> emailPerson;
+    AttValPair createAttPair(std::string input); //function that turns a string version of attVal pair to the struct attvalpair
+    RadixTree<std::vector<std::string>> pairEmailsRT; //RadixTree class that maps attribute-value pairs to email addresses
+    
+    
+    RadixTree<PersonProfile*> emailPersonRT;// RadixTree class that maps email addresses to member profiles
     
 };
 

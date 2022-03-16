@@ -41,10 +41,6 @@ public:
     
     //The GetEmail method returns the member’s email address.
     void AddAttValPair(const AttValPair& attval);
-    
-    
-    
-    
 //    The AddAttValPair method is used to add a new attribute-value pair to the member’s profile. If
 //    the person’s profile already has an attribute-value pair with the same attribute and value as the
 //    attval parameter, then this method should do nothing. More than one attribute-value pair in the
@@ -66,10 +62,10 @@ private:
     std::string m_name;
     std::string m_email;
     //int m_attribute_num;
-    std::map<std::string, std::string> attMap;
-    //RadixTree<std::unordered_set<std::string>> attRTset;
+    //std::map<std::string, std::string> attMap;
+    RadixTree<std::unordered_set<std::string>> attRTset; // radix tree that maps attributes to values
     
-    std::vector<AttValPair> attVec;
+    std::vector<AttValPair> attVec; // vector that stores attValPairs so that we can retrieve AttVal using a index(attribute_num)
     //std::set<AttValPair> attSet;
     
 };
