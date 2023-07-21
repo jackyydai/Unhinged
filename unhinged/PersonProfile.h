@@ -64,7 +64,7 @@ private:
     //int m_attribute_num;
     //std::map<std::string, std::string> attMap;
     RadixTree<std::unordered_set<std::string>> attRTset; // radix tree that maps attributes to values
-    
+     
     std::vector<AttValPair> attVec; // vector that stores attValPairs so that we can retrieve AttVal using a index(attribute_num)
     //std::set<AttValPair> attSet;
     

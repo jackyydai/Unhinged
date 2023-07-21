@@ -13,9 +13,7 @@
 using namespace std;
 
 AttributeTranslator::AttributeTranslator()
-{
-
-}
+{}
 
 bool AttributeTranslator::Load(std::string filename)
 {

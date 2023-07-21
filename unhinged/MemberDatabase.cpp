@@ -25,7 +25,7 @@ AttValPair MemberDatabase::createAttPair(string line)
 
 bool MemberDatabase::LoadDatabase(std::string filename)
 {
-    
+
     string line;
     ifstream infile;
     infile.open(filename);
@@ -38,10 +38,10 @@ bool MemberDatabase::LoadDatabase(std::string filename)
         string name;
         string email;
         string strOfAtt;
-        
+
         name = line; // sets the first line to string varible name
         //cout << name << endl;
-        
+
         getline(infile, line, '\n');
         email = line;//sets second line to the string varible email
         //cout << email <<  endl;
@@ -51,15 +51,15 @@ bool MemberDatabase::LoadDatabase(std::string filename)
         //cout << strOfAtt << endl ;
         int numOfAtt = stoi(strOfAtt); //cast to a int using stoi
         //cout << numOfAtt << endl;
-        
-        
-        
+
+
+
 //        if(emailPerson.find(email) != emailPerson.end())
         if(emailPersonRT.search(email) != nullptr) // If two members in the data file have the same email address, this method returns false.
         {
             return false;
         }
-        
+
         PersonProfile* person = new PersonProfile(name,email); //create new person
         for(int i = 0; i < numOfAtt; i++) // loops through the number of attributeval in each each memeber discription
         {
@@ -67,7 +67,7 @@ bool MemberDatabase::LoadDatabase(std::string filename)
             getline(infile, line, '\n');
             sPair = line;
             AttValPair aPair = createAttPair(sPair);
-            
+
             person->AddAttValPair(aPair);// add each attvalpair the person just created
             vector<string>* p = pairEmailsRT.search(sPair);//creates a vetor pointer to see if their exist vector of emails that map to a sourse pair
             if(p == nullptr)
@@ -102,17 +102,17 @@ bool MemberDatabase::LoadDatabase(std::string filename)
     }
     infile.close();
     return true;
-    
-    
-    
+
+
+
 }
 
 std::vector<std::string> MemberDatabase::FindMatchingMembers(const AttValPair& input) const
 {
     string search = input.attribute + "," + input.value;
-    
+
     vector<string>* p = pairEmailsRT.search(search);// searches the attribute value pair email tree
-    
+
     if(p == nullptr)//if null return empty string, return vector itself otherwise
     {
         vector<string> nothing;
@@ -136,3 +136,4 @@ const PersonProfile* MemberDatabase::GetMemberByEmail(std::string email) const
         return (*p);
     }
 }
+
